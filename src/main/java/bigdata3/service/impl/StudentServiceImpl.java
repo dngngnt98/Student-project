@@ -37,9 +37,24 @@ public class StudentServiceImpl implements StudentService {
     if (count < 1) {
       throw new Exception(student.getNo() + "번 학생을 찾을 수 없습니다.");
     }
+    count = studentDao.update(student);
+    if (count < 1) {
+      throw new Exception(student.getNo() + "번 학생을 찾을 수 없습니다.");
+    }
   }
   
   public Student get(int no) throws Exception {
     return studentDao.selectOne(no);
+  }
+  
+  public void remove(int no) throws Exception {
+    int count = studentDao.delete(no);
+    if (count < 1) {
+      throw new Exception(no + "번 학생을 찾을 수 없습니다.");
+    }
+    
+    try {
+      count = memberDao.delete(no);
+    } catch (Exception e) {}
   }
 }
