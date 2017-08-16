@@ -10,5 +10,5 @@ public interface StudentService {
   void add(Student student) throws Exception; 
 
   void update(Student student) throws Exception;
-
+  Student get(int no) throws Exception;
 }

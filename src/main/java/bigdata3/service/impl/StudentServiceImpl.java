@@ -38,4 +38,8 @@ public class StudentServiceImpl implements StudentService {
       throw new Exception(student.getNo() + "번 학생을 찾을 수 없습니다.");
     }
   }
+  
+  public Student get(int no) throws Exception {
+    return studentDao.selectOne(no);
+  }
 }
