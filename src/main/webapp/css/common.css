@@ -1,0 +1,72 @@
+@CHARSET "UTF-8";
+address {
+  display: inline-block;
+}
+.footer {
+  background-color: purple;
+  color: yellow;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+}
+.header {
+  color: yellow;
+  background-color: purple;
+  height: 20px;
+  padding: 5px 10px;
+}
+#logo {
+  float: left;
+}
+#login {
+  float: right;
+}
+.header a {
+	color: white;
+	text-decoration: none;
+}
+.header a:hover {
+  text-decoration: underline;
+}
+
+.photo1{
+	height: 100px;
+}
+
+table.type09 {
+    border-collapse: collapse;
+    text-align: left;
+    line-height: 1.5;
+
+}
+
+a{
+	font-weight: bold;
+	color: #369;
+}
+table.type09 thead th {
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    color: #369;
+    border-bottom: 3px solid #036;
+}
+table.type09 tbody th {
+    width: 150px;
+    padding: 10px;
+    font-weight: bold;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+    background: #f3f6f7;
+}
+table.type09 td {
+    width: 350px;
+    padding: 10px;
+    vertical-align: top;
+    border-bottom: 1px solid #ccc;
+}
+
+
+
+
+
