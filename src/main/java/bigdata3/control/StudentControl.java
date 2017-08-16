@@ -23,7 +23,10 @@ public class StudentControl {
   
   
   @RequestMapping("list")
-  public String list( @RequestParam(defaultValue="1") int pageNo, @RequestParam(defaultValue="5") int pageSize, Model model) throws Exception {
+  public String list(    
+    @RequestParam(defaultValue="1") int pageNo,
+    @RequestParam(defaultValue="5") int pageSize,
+    Model model) throws Exception {
     List<Student> list = studentService.list(pageNo, pageSize);
       model.addAttribute("list", list);
         return "student/list";
@@ -44,4 +47,43 @@ public class StudentControl {
     studentService.add(student);
     return "redirect:list.do"; 
   }
+  
+  @RequestMapping("add")
+  public String add(Student student, MultipartFile photo) throws Exception {
+    if (photo.getSize() != 0) {
+      photo.transferTo(new File(servletContext.getRealPath(
+        "/student/photo/" + photo.getOriginalFilename())));
+    
+      student.setPhotoName(photo.getOriginalFilename());
+    }
+    studentService.add(student);
+    return "redirect:list.do"; 
+  }
+  
+  @RequestMapping("detail")
+  public String detail(int no, Model model) throws Exception {
+    Student student = studentService.get(no);
+    if (student == null) {
+      throw new Exception(no + "번 학생 없습니다.");
+    }
+    model.addAttribute("student", student);
+    return "student/detail";
+  }
+  
+  @RequestMapping("update") 
+  public String update(Student student, MultipartFile photo) throws Exception {
+    if (photo.getSize() != 0) {
+      photo.transferTo(new File(servletContext.getRealPath(
+        "/student/photo/" + photo.getOriginalFilename())));
+    
+      student.setPhotoName(photo.getOriginalFilename());
+     }
+    studentService.update(student);
+    return "redirect:list.do";
+  }
+  @RequestMapping("delete")
+  public String delete(int no) throws Exception {
+    studentService.remove(no);
+    return "redirect:list.do";
+  }   
 }
