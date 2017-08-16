@@ -15,28 +15,27 @@ import bigdata3.service.StudentService;
 public class StudentServiceImpl implements StudentService {
   @Autowired
   MemberDao memberDao;
-  
+
   @Autowired
   StudentDao studentDao;
-  
+
   public List<Student> list(int pageNo, int pageSize) throws Exception {
-    HashMap<String,Object> valueMap = new HashMap<>();
+    HashMap<String, Object> valueMap = new HashMap<>();
     valueMap.put("startIndex", (pageNo - 1) * pageSize);
     valueMap.put("pageSize", pageSize);
-    
+
     return studentDao.selectList(valueMap);
   }
+
   public void add(Student student) throws Exception {
     memberDao.insert(student);
-    studentDao.insert(student); 
+    studentDao.insert(student);
   }
-<<<<<<< HEAD
-=======
-  
+
   public void update(Student student) throws Exception {
     int count = memberDao.update(student);
     if (count < 1) {
       throw new Exception(student.getNo() + "번 학생을 찾을 수 없습니다.");
     }
->>>>>>> branch 'master' of https://github.com/dngngnt98/Student-project.git
+  }
 }
