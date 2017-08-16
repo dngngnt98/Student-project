@@ -30,4 +30,13 @@ public class StudentServiceImpl implements StudentService {
     memberDao.insert(student);
     studentDao.insert(student); 
   }
+<<<<<<< HEAD
+=======
+  
+  public void update(Student student) throws Exception {
+    int count = memberDao.update(student);
+    if (count < 1) {
+      throw new Exception(student.getNo() + "번 학생을 찾을 수 없습니다.");
+    }
+>>>>>>> branch 'master' of https://github.com/dngngnt98/Student-project.git
 }
