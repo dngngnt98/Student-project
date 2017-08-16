@@ -4,73 +4,67 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="bigdata3.dao.TeacherDao">
 
-  <resultMap type="teacher" id="teacherMap">
+  <resultMap type="student" id="studentMap"> 
     <id column="mno" property="no"/>
     <result column="email" property="email"/>
     <result column="name" property="name"/>
     <result column="tel" property="tel"/>
     <result column="pwd" property="password"/>
-    <result column="hmpg" property="homepage"/>
-    <result column="fcbk" property="facebook"/>
-    <result column="twit" property="twitter"/>
-    <collection property="photoList" ofType="string">
-      <result column="path"/>
-    </collection>
+    <result column="work" property="workingYn"/>
+    <result column="lst_schl" property="lastEducation"/>
+    <result column="schl_nm" property="schoolName"/>
+    <result column="pst_no" property="postNumber"/>
+    <result column="bas_adr" property="primaryAddress"/>
+    <result column="det_adr" property="detailAddress"/>
+    <result column="path" property="photoName" />
   </resultMap>
 
-  <select id="selectList" resultMap="teacherMap" parameterType="map">
-    select  m.mno, m.name, m.tel, m.email, t.hmpg, null as path
-    from tcher t inner join memb m on t.tno=m.mno
-    order by m.name asc 
+  <resultMap type="student" id="studentSimpleMap">
+    <id column="mno" property="no"/>
+    <result column="email" property="email"/>
+    <result column="name" property="name"/>
+    <result column="tel" property="tel"/>
+    <result column="pwd" property="password"/>
+    <result column="work" property="workingYn"/>
+  </resultMap>  
+    
+  <select id="selectList" resultMap="studentSimpleMap" parameterType="map">
+    select  m.mno, m.name, m.tel, m.email, s.work
+    from stud s inner join memb m on s.sno=m.mno
+    order by m.mno desc
     limit #{startIndex}, #{pageSize}
   </select>
-  
-  <select id="selectOne" resultMap="teacherMap" parameterType="int">
-    select  m.mno, m.name, m.tel, m.email, t.hmpg, t.fcbk, t.twit, tp.path
-    from tcher t inner join memb m on t.tno=m.mno
-                 left outer join tch_phot tp on t.tno=tp.tno
+
+  <insert id="insert" parameterType="student">
+    insert into stud (sno, work, lst_schl, schl_nm, pst_no, bas_adr, det_adr, path) 
+    values(#{no}, #{workingYn}, #{lastEducation}, #{schoolName}, 
+           #{postNumber}, #{primaryAddress}, #{detailAddress}, #{photoName})
+  </insert>
+
+  <select id="selectOne" resultMap="studentMap" parameterType="int">
+    select  m.mno, m.name, m.tel, m.email, 
+            s.work , s.lst_schl, s.schl_nm, 
+            s.pst_no, s.bas_adr, s.det_adr, s.path
+    from stud s inner join memb m on s.sno=m.mno
     where mno = #{memberNo}
   </select>
-  
-  <select id="selectOneByEmailPassword" resultMap="teacherMap" parameterType="map">
-    select  m.mno, m.name, m.tel, m.email, t.hmpg, t.fcbk, t.twit, tp.path
-    from tcher t inner join memb m on t.tno=m.mno
-                 left outer join tch_phot tp on t.tno=tp.tno
-    where email=#{email} and pwd=password(#{password})
-  </select>
-  
-  <insert id="insert" parameterType="teacher">
-    insert into tcher(tno, hmpg, fcbk, twit) 
-    values(#{no}, #{homepage}, #{facebook}, #{twitter})
-  </insert>
-  
-  <delete id="delete" parameterType="int">
-    delete from tcher where tno=#{teacherNo}
-  </delete>
-  
-  <update id="update" parameterType="teacher">
-    update tcher set 
-      hmpg=#{homepage}, 
-      fcbk=#{facebook}, 
-      twit=#{twitter} 
-    where tno=#{no}
+
+  <update id="update" parameterType="student">
+    update stud set 
+      work=#{workingYn}, 
+      lst_schl=#{lastEducation}, 
+      schl_nm=#{schoolName},
+      pst_no=#{postNumber},
+      bas_adr=#{primaryAddress},
+      det_adr=#{detailAddress},
+      path=#{photoName}
+    where sno=#{no}
   </update>
-  
-  <insert id="insertPhoto" parameterType="map">
-    insert into tch_phot(tno,path) 
-    values(#{teacherNo}, #{photoPath})
-  </insert>
-  
-  <select id="selectPhotoList" parameterType="int">
-    select tpno, tno, path
-    from tch_phot
-    where tno=#{teacherNo}
-  </select>
-  
-  <delete id="deletePhoto" parameterType="int">
-    delete from tch_phot
-    where tno=#{teacherNo}
+
+  <delete id="delete" parameterType="int">
+    delete from stud where sno=#{studentNo}
   </delete>
+  
 </mapper>
 
 
