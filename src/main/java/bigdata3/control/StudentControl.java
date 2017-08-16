@@ -48,18 +48,7 @@ public class StudentControl {
     return "redirect:list.do"; 
   }
   
-  @RequestMapping("add")
-  public String add(Student student, MultipartFile photo) throws Exception {
-    if (photo.getSize() != 0) {
-      photo.transferTo(new File(servletContext.getRealPath(
-        "/student/photo/" + photo.getOriginalFilename())));
-    
-      student.setPhotoName(photo.getOriginalFilename());
-    }
-    studentService.add(student);
-    return "redirect:list.do"; 
-  }
-  
+
   @RequestMapping("detail")
   public String detail(int no, Model model) throws Exception {
     Student student = studentService.get(no);
@@ -87,3 +76,12 @@ public class StudentControl {
     return "redirect:list.do";
   }   
 }
+
+
+
+
+
+
+
+
+
