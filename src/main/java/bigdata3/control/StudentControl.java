@@ -48,6 +48,7 @@ public class StudentControl {
     return "redirect:list.do"; 
   }
   
+
   @RequestMapping("detail")
   public String detail(int no, Model model) throws Exception {
     Student student = studentService.get(no);

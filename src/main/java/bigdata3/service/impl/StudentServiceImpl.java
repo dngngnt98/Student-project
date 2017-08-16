@@ -26,4 +26,8 @@ public class StudentServiceImpl implements StudentService {
     
     return studentDao.selectList(valueMap);
   }
+  public void add(Student student) throws Exception {
+    memberDao.insert(student);
+    studentDao.insert(student); 
+  }
 }
